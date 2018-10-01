@@ -4,7 +4,7 @@ A viewer for Stats objects.
 import os
 
 from IPython.display import display
-from ipywidgets import interactive, IntSlider
+from ipywidgets import interactive, IntSlider, Dropdown
 import matplotlib.pyplot as plt
 import pandas as pd
 from pstats import Stats
@@ -74,12 +74,11 @@ class StatsViewer(object):
         "cumtime",
     ]
 
-    def __init__(self, filename, strip_dirs=True, remote_js=False):
+    def __init__(self, filename, strip_dirs=True):
         self.name = os.path.basename(filename)
         stats = Stats(filename)
         self.stats = stats.strip_dirs() if strip_dirs else stats
         self.timings, self.callers = _calc_frames(stats)
-        self.remote_js = remote_js
 
     def summary(self, count):
         fig = plt.figure()
@@ -147,7 +146,7 @@ class StatsViewer(object):
         return interactive(
             _interact,
             count=IntSlider(min=5, max=100, step=5, value=20),
-            sort_by=['cumtime', 'tottime', 'ncalls'],
+            sort_by=['cumtime', 'tottime', 'ncalls'], #sort_by=Dropdown(options=('cumtime', 'tottime', 'ncalls')),
         )
 
     def compare_chart(self, other, field='cumtime', count=35):
@@ -184,7 +183,7 @@ class StatsViewer(object):
             self.view(count, field, show_table=False)
 
         return display(
-            show_grid(self.timings, self.remote_js),
+            show_grid(self.timings),
             interactive(
                 _interact,
                 count=IntSlider(min=5, max=100, step=5, value=35),

@@ -32,7 +32,7 @@ setup(
     ],
     install_requires=[
         'notebook',
-        'qgrid>=0.3.1',
+        'qgrid>=1.0.0',
         'seaborn',
     ],
     url="https://github.com/ssanderson/pstats-view"
