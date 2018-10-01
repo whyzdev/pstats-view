@@ -122,7 +122,7 @@ class StatsViewer(object):
         plt.ylabel('Filename:Function Name')
 
     def _show_table(self, data):
-        return show_grid(data, remote_js=self.remote_js)
+        return show_grid(data, show_toolbar=True)
 
     def table(self, fields=None):
         if fields is None:
@@ -147,7 +147,7 @@ class StatsViewer(object):
         return interactive(
             _interact,
             count=IntSlider(min=5, max=100, step=5, value=20),
-            sort_by=('cumtime', 'tottime', 'ncalls'),
+            sort_by=['cumtime', 'tottime', 'ncalls'],
         )
 
     def compare_chart(self, other, field='cumtime', count=35):
